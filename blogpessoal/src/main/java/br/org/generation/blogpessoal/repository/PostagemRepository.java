@@ -1,7 +1,5 @@
 package br.org.generation.blogpessoal.repository;
-
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +10,5 @@ public interface PostagemRepository extends JpaRepository <Postagem, Long>{
 
 	//selec * from tb_postagens where title like "%title%"
 
-	List<Postagem>findAllByTituloContainingignoreCase(String titulo);
+	List<Postagem>findAllByTituloContainingIgnoreCase(String titulo);
 }
