@@ -24,46 +24,46 @@ import br.org.generation.blogpessoal.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins="*", allowedHeaders ="*")
 public class UsuarioController {
-
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
+	
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	@GetMapping("all")
+	@GetMapping("/all")
 	public ResponseEntity<List<Usuario>> getAll(){
 		return ResponseEntity.ok(usuarioRepository.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getById(@PathVariable Long id) {
+	public ResponseEntity<Usuario> getById(@PathVariable Long id){
 		return usuarioRepository.findById(id)
-			.map(resposta -> ResponseEntity.ok(resposta))
-			.orElse(ResponseEntity.notFound().build());
+				.map(resposta -> ResponseEntity.ok(resposta))
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> postUsuario(@Valid @RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> postUsuario(@Valid @RequestBody Usuario usuario){
 		return usuarioService.cadastrarUsuario(usuario)
 				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
-
+	
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> puttUsuario(@Valid @RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario){
 		return usuarioService.atualizarUsuario(usuario)
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
 	@PostMapping("/logar")
-	public ResponseEntity<UsuarioLogin> login (@RequestBody Optional<UsuarioLogin> usuarioLogin) {
+	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> usuarioLogin){
 		return usuarioService.autenticarUsuario(usuarioLogin)
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-
 	}
+	
 }
